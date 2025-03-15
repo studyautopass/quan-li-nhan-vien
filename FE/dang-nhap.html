@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Đăng nhập</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+                <input type="text" id="username" placeholder="Tên đăng nhập" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" placeholder="Mật khẩu" required>
+            </div>
+            <button type="submit" class="btn-green">Đăng nhập</button>
+        </form>
+    </div>
+   >
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Giả sử bạn có một hàm kiểm tra quyền của người dùng
+            const userRole = checkUserRole(username, password);
+
+            if (userRole === 'admin') {
+                location.href = 'quan-tri.html';
+            } else if (userRole === 'HR') {
+                location.href = 'index.html';
+            } else {
+                alert('Tên đăng nhập hoặc mật khẩu không đúng');
+            }
+        });
+
+        // Hàm giả định để kiểm tra quyền của người dùng
+        function checkUserRole(username, password) {
+            // Thay thế logic này bằng kiểm tra thực tế từ cơ sở dữ liệu hoặc API
+            if (username === 'admin' && password === 'admin123') {
+                return 'admin';
+            } else if (username === 'hr' && password === 'hr123') {
+                return 'HR';
+            } else {
+                return null;
+            }
+        }
+    </script>
+</body>
+</html>

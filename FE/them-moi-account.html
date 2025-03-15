@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm mới account</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Thêm mới account</h1>
+        <form id="addAccountForm">
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+                <input type="text" id="username" placeholder="Tên đăng nhập" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" placeholder="Mật khẩu" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Phân quyền</label>
+                <input type="text" id="role" placeholder="Phân quyền" required>
+            </div>
+            <button type="submit" class="btn-green">Thêm mới</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('addAccountForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            if (username && password && role) {
+                alert('Account mới đã được thêm!');
+                location.href = 'quan-tri.html';
+            } else {
+                alert('Vui lòng nhập đầy đủ thông tin');
+            }
+        });
+    </script>
+</body>
+</html>

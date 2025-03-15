@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+label {
+    width: 150px; /* Chiều rộng cố định cho nhãn */
+    margin-right: 10px;
+}
+
+input, select {
+    width: 50%; /* Giảm chiều dài xuống còn một nửa */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button.btn-green {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 20px; /* Tăng chiều cao nút */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    font-size: 16px;
+    text-align: center;
+}
+
+button.btn-green:hover {
+    background-color: #45a049;
+}
+.search-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    width: 30%; /* Giảm chiều dài của hộp tìm kiếm */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button.btn-green {
+    background-color: #4CAF50;
+    color: white;
+    padding: 30px 60px; /* Tăng chiều cao và chiều dài nút gấp đôi */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.btn-green:hover {
+    background-color: #45a049;
+}
+
+table.employee-table {
+    width: 100%; /* Đặt chiều rộng bảng là 80% màn hình */
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.add-button-container {
+    display: flex;
+    justify-content: flex-end; /* Di chuyển nút sang bên phải */
+    margin-bottom: 20px; /* Cách danh sách phòng ban một khoảng vừa đủ */
+}
+
+button.btn-green {
+    background-color: #4CAF50;
+    color: white;
+    padding: 30px 60px; /* Tăng chiều cao và chiều dài nút gấp đôi */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+button.btn-green:hover {
+    background-color: #45a049;
+}
+
+table.department-table {
+    width: 85%; /* Tăng chiều rộng bảng một chút */
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+table.user-table {
+    width: 90%; /* Tăng chiều rộng bảng một chút */
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
