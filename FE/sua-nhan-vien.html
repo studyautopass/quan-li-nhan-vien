@@ -9,7 +9,7 @@
   <body>
     <div class="container">
       <h1>Thêm mới nhân viên</h1>
-      <form id="addEmployeeForm">
+      <form id="editEmployeeForm">
         <div class="form-group">
           <label for="employeeId">Mã nhân viên</label>
           <input
@@ -60,42 +60,54 @@
         <button
           type="submit"
           class="btn-green"
-          onclick="quan-ly-nhan-vien.html"
+          onclick="'quan-ly-nhan-vien.html'"
         >
-          Thêm mới
+          Sửa
         </button>
       </form>
     </div>
     <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const index = urlParams.get("index");
+
+      // Lấy danh sách nhân viên từ localStorage
+      let employees = JSON.parse(localStorage.getItem("employees")) || [];
+
+      // Lấy thông tin nhân viên cần chỉnh sửa
+      const employee = employees[index];
+      console.log(`employee:: `, employee);
+      // Gán dữ liệu vào form
+      document.getElementById("employeeId").value = employee.employeeId;
+      document.getElementById("employeeName").value = employee.employeeName;
+      document.getElementById("birthDate").value = employee.birthDate;
+      document.getElementById("gender").value = employee.gender;
+      document.getElementById("address").value = employee.address;
+      document.getElementById("phone").value = employee.phone;
+      document.getElementById("departmentId").value = employee.departmentId;
+
+      // Xử lý sự kiện khi người dùng bấm "Lưu thay đổi"
       document
-        .getElementById("addEmployeeForm")
+        .getElementById("editEmployeeForm")
         .addEventListener("submit", function (event) {
           event.preventDefault();
 
-          // Lấy danh sách nhân viên từ localStorage
-          let employees = JSON.parse(localStorage.getItem("employees")) || [];
-
-          // Tạo nhân viên mới
-          const newEmployee = {
-            id: employees.length + 1,
-            maNhanVien: document.getElementById("employeeId").value,
-            tenNhanVien: document.getElementById("employeeName").value,
-            ngaySinh: document.getElementById("birthDate").value,
-            gioiTinh: document.getElementById("gender").value,
-            diaChi: document.getElementById("address").value,
-            soDienThoai: document.getElementById("phone").value,
-            maPhong: document.getElementById("departmentId").value,
+          // Cập nhật dữ liệu nhân viên
+          employees[index] = {
+            employeeId: document.getElementById("employeeId").value,
+            employeeName: document.getElementById("employeeName").value,
+            birthDate: document.getElementById("birthDate").value,
+            gender: document.getElementById("gender").value,
+            address: document.getElementById("address").value,
+            phone: document.getElementById("phone").value,
+            departmentId: document.getElementById("departmentId").value,
           };
 
-          // Thêm nhân viên vào danh sách
-          employees.push(newEmployee);
-
-          // Cập nhật localStorage
+          // Lưu vào localStorage
           localStorage.setItem("employees", JSON.stringify(employees));
 
-          // Thông báo và chuyển hướng
-          alert("Nhân viên mới đã được thêm!");
-          location.href = "quan-ly-nhan-vien.html";
+          // Thông báo và quay về trang danh sách
+          alert("Cập nhật thành công!");
+          window.location.href = "quan-ly-nhan-vien.html";
         });
     </script>
   </body>

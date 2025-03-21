@@ -1,29 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản trị</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Quản trị</h1>
-        <div class="add-button-container">
-            <button class="btn-green" onclick="location.href='them-moi-account.html'">Cấp mới</button>
-        </div>
-        <table class="user-table">
-            <thead>
-                <tr>
-                    <th>Tên đăng nhập</th>
-                    <th>Mật khẩu</th>
-                    <th>Phân quyền</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Danh sách user sẽ được hiển thị ở đây -->
-            </tbody>
-        </table>
+      <h1>Quản trị</h1>
+      <div class="add-button-container">
+        <button
+          class="btn-green"
+          onclick="location.href='them-moi-account.html'"
+          id="addUser"
+        >
+          Cấp mới
+        </button>
+      </div>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Tên đăng nhập</th>
+            <th>Mật khẩu</th>
+            <th>Phân quyền</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+          <!-- Data will be inserted here -->
+        </tbody>
+      </table>
     </div>
-</body>
+  </body>
+  <script>
+    function loadUsers() {
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const tableBody = document.getElementById("userTableBody");
+      tableBody.innerHTML = ""; // Clear existing content
+
+      users.forEach((user, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.password}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <button class="edit-btn" onclick="location.href='sua-account.html?index=${index}'"">Sửa</button>
+                        <button class="delete-btn" onclick="deleteUser(${index})">Xóa</button>
+                    </td>
+                `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Xóa người dùng
+    function deleteUser(index) {
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      if (confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
+        users.splice(index, 1); // Xóa người dùng khỏi mảng
+        localStorage.setItem("users", JSON.stringify(users)); // Cập nhật localStorage
+        loadUsers(); // Tải lại bảng
+      }
+    }
+
+    loadUsers();
+
+    // function findUser(account, password) {
+    //   const users = JSON.parse(localStorage.getItem("users")) || [];
+    //   return users.find(
+    //     (user) => user.account === account && user.password === password
+    //   );
+    // }
+
+    // const user = findUser("user1", "password1");
+    // console.log(user ? "Login successful" : "Invalid credentials");
+
+    // Attach event listener to login form
+  </script>
 </html>

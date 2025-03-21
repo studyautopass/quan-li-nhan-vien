@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thêm mới account</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Thêm mới account</h1>
+      <form id="editAccountForm">
+        <div class="form-group">
+          <label for="username">Tên đăng nhập</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Tên đăng nhập"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Mật khẩu"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="role">Phân quyền</label>
+          <select name="role" id="role">
+            <option value="admin">admin</option>
+            <option value="hr">hr</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-green">Sửa</button>
+      </form>
+    </div>
+    <script>
+      // Lấy chỉ mục user từ URL
+      const params = new URLSearchParams(window.location.search);
+      const userIndex = params.get("index");
+
+      if (userIndex !== null) {
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let user = users[userIndex];
+
+        // Điền dữ liệu vào input
+        document.getElementById("username").value = user.username;
+        document.getElementById("password").value = user.password;
+        document.getElementById("role").value = user.role;
+
+        // Lưu thay đổi
+        document
+          .getElementById("editAccountForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            users[userIndex] = {
+              username: document.getElementById("username").value,
+              password: document.getElementById("password").value,
+              role: document.getElementById("role").value,
+            };
+
+            localStorage.setItem("users", JSON.stringify(users));
+            alert("Cập nhật thành công!");
+            window.location.href = "quan-tri.html"; // Quay lại trang chính
+          });
+      }
+    </script>
+  </body>
+</html>

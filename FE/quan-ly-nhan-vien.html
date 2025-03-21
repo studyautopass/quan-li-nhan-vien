@@ -1,36 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý nhân viên</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Quản lý nhân viên</h1>
-        <div class="search-add">
-            <input type="text" class="search-box" placeholder="Tìm kiếm nhân viên...">
-            <button class="btn-green"onclick="location.href='them-nhan-vien.html'">Thêm nhân viên mới</button>
-        </div>
-        <table class="employee-table">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Mã nhân viên</th>
-                    <th>Tên nhân viên</th>
-                    <th>Ngày sinh</th>
-                    <th>Giới tính</th>
-                    <th>Địa chỉ</th>
-                    <th>Số điện thoại</th>
-                    <th>Mã phòng</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Danh sách nhân viên sẽ được hiển thị ở đây -->
-            </tbody>
-        </table>
+      <h1>Quản lý nhân viên</h1>
+      <div class="search-add">
+        <input
+          type="text"
+          class="search-box"
+          id="searchInput"
+          placeholder="Tìm kiếm nhân viên..."
+        />
+        <button class="search-btn" onclick="searchEmployee()">Tìm kiếm</button>
+        <button class="btn-green" onclick="location.href='them-nhan-vien.html'">
+          Thêm nhân viên mới
+        </button>
+      </div>
+      <table class="employee-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã nhân viên</th>
+            <th>Tên nhân viên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+            <th>Mã phòng</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="employeeTableBody">
+          <!-- Danh sách nhân viên sẽ được hiển thị ở đây -->
+        </tbody>
+      </table>
     </div>
-</body>
+  </body>
+  <script>
+    function loadEmployees() {
+      const employees = JSON.parse(localStorage.getItem("employees")) || [];
+      const tableBody = document.getElementById("employeeTableBody");
+      tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+
+      employees.forEach((employee, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${employee.employeeId}</td>
+                    <td>${employee.employeeName}</td>
+                    <td>${employee.birthDate}</td>
+                    <td>${employee.gender}</td>
+                    <td>${employee.address}</td>
+                    <td>${employee.phone}</td>
+                    <td>${employee.departmentId}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editEmployee(${index})">Sửa</button>
+                        <button class="delete-btn" onclick="deleteEmployee(${index})">Xóa</button>
+                    </td>
+                `;
+
+        tableBody.appendChild(row);
+      });
+    }
+
+    function deleteEmployee(index) {
+      let employees = JSON.parse(localStorage.getItem("employees")) || [];
+      if (confirm("Bạn có chắc muốn xóa nhân viên này không?")) {
+        employees.splice(index, 1);
+        localStorage.setItem("employees", JSON.stringify(employees));
+        loadEmployees(); // Tải lại danh sách sau khi xóa
+      }
+    }
+
+    function editEmployee(index) {
+      window.location.href = `sua-nhan-vien.html?index=${index}`;
+    }
+
+    function displayEmployees(employeeList) {
+      const tableBody = document.getElementById("employeeTableBody");
+      tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+
+      employeeList.forEach((employee, index) => {
+        const row = `<tr>
+            <td>${index + 1}</td>
+            <td>${employee.employeeId}</td>
+            <td>${employee.employeeName}</td>
+            <td>${employee.birthDate}</td>
+            <td>${employee.gender}</td>
+            <td>${employee.address}</td>
+            <td>${employee.phone}</td>
+            <td>${employee.departmentId}</td>
+            <td>
+               <button class="action-btn edit-btn" onclick="editEmployee(${index})">Sửa</button>
+               <button class="action-btn delete-btn" onclick="deleteEmployee(${index})">Xóa</button>
+            </td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    function searchEmployee() {
+      const searchValue = document
+        .getElementById("searchInput")
+        .value.toLowerCase();
+      const employees = JSON.parse(localStorage.getItem("employees")) || [];
+
+      // Lọc danh sách theo employeeId hoặc employeeName
+      const filteredEmployees = employees.filter(
+        (employee) =>
+          employee.employeeId.toLowerCase().includes(searchValue) ||
+          employee.employeeName.toLowerCase().includes(searchValue)
+      );
+
+      // Hiển thị kết quả tìm kiếm
+      displayEmployees(filteredEmployees);
+    }
+
+    loadEmployees();
+  </script>
 </html>

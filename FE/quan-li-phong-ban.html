@@ -1,29 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý phòng ban</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Quản lý phòng ban</h1>
-        <div class="add-button-container">
-            <button class="btn-green" onclick="location.href='them-phong-ban.html'">Thêm phòng ban mới</button>
-        </div>
-        <table class="department-table">
-            <thead>
-                <tr>
-                    <th>Mã phòng ban</th>
-                    <th>Tên phòng ban</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Danh sách phòng ban sẽ được hiển thị ở đây -->
-            </tbody>
-        </table>
+      <h1>Quản lý phòng ban</h1>
+      <div class="add-button-container">
+        <button class="btn-green" onclick="location.href='them-phong-ban.html'">
+          Thêm phòng ban mới
+        </button>
+      </div>
+      <table class="department-table">
+        <thead>
+          <tr>
+            <th>Mã phòng ban</th>
+            <th>Tên phòng ban</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Danh sách phòng ban sẽ được hiển thị ở đây -->
+        </tbody>
+      </table>
     </div>
-</body>
+  </body>
+  <script>
+    function loadDepartments() {
+      const departments = JSON.parse(localStorage.getItem("departments")) || [];
+      const tableBody = document.querySelector(".department-table tbody");
+      tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+
+      departments.forEach((department, index) => {
+        const row = `
+            <tr>
+                <td>${department.departmentId}</td>
+                <td>${department.departmentName}</td>
+                <td>
+                    <button class="edit-btn" onclick="editDepartment('${index}')">Sửa</button>
+                    <button class="delete-btn" onclick="deleteDepartment('${department.departmentId}')">Xóa</button>
+                </td>
+            </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    function deleteDepartment(departmentId) {
+      if (confirm("Bạn có chắc muốn xóa phòng ban này không?")) {
+        let departments = JSON.parse(localStorage.getItem("departments")) || [];
+        departments = departments.filter(
+          (dept) => dept.departmentId !== departmentId
+        );
+        localStorage.setItem("departments", JSON.stringify(departments));
+        loadDepartments(); // Cập nhật bảng
+      }
+    }
+
+    function editDepartment(index) {
+      window.location.href = `sua-phong-ban.html?index=${index}`;
+    }
+
+    // Gọi hàm khi trang tải
+    loadDepartments();
+  </script>
 </html>

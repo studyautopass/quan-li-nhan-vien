@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thêm mới phòng ban</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Thêm mới phòng ban</h1>
-        <form id="addDepartmentForm">
-            <div class="form-group">
-                <label for="departmentId">Mã phòng</label>
-                <input type="text" id="departmentId" placeholder="Mã phòng" required>
-            </div>
-            <div class="form-group">
-                <label for="departmentName">Tên phòng</label>
-                <input type="text" id="departmentName" placeholder="Tên phòng" required>
-            </div>
-            <button type="submit" class="btn-green">Thêm mới</button>
-        </form>
+      <h1>Thêm mới phòng ban</h1>
+      <form id="addDepartmentForm">
+        <div class="form-group">
+          <label for="departmentId">Mã phòng</label>
+          <input
+            type="text"
+            id="departmentId"
+            placeholder="Mã phòng"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="departmentName">Tên phòng</label>
+          <input
+            type="text"
+            id="departmentName"
+            placeholder="Tên phòng"
+            required
+          />
+        </div>
+        <button type="submit" class="btn-green">Thêm mới</button>
+      </form>
     </div>
-    <script>
-        document.getElementById('addDepartmentForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            // Kiểm tra và thêm phòng ban mới vào danh sách
-            alert('Phòng ban mới đã được thêm!');
-            location.href = 'quan-ly-phong-ban.html';
-        });
-    </script>
-</body>
+  </body>
+  <script>
+    document
+      .getElementById("addDepartmentForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Lấy dữ liệu từ form
+        const departmentId = document
+          .getElementById("departmentId")
+          .value.trim();
+        const departmentName = document
+          .getElementById("departmentName")
+          .value.trim();
+
+        if (!departmentId || !departmentName) {
+          alert("Vui lòng nhập đầy đủ thông tin!");
+          return;
+        }
+
+        // Lấy danh sách phòng ban từ localStorage
+        let departments = JSON.parse(localStorage.getItem("departments")) || [];
+
+        // Kiểm tra xem mã phòng ban đã tồn tại chưa
+        const isExist = departments.some(
+          (dept) => dept.departmentId === departmentId
+        );
+        if (isExist) {
+          alert("Mã phòng ban đã tồn tại!");
+          return;
+        }
+
+        // Thêm phòng ban mới
+        const newDepartment = { departmentId, departmentName };
+        departments.push(newDepartment);
+        localStorage.setItem("departments", JSON.stringify(departments));
+
+        alert("Thêm phòng ban thành công!");
+        location.href = "quan-li-phong-ban.html"; // Chuyển về trang danh sách
+      });
+  </script>
 </html>

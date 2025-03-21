@@ -1,18 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý nhân viên và phòng ban</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý nhân viên</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .title {
+        background-color: #d1f8d1;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .container {
+        display: flex;
+        gap: 50px;
+        margin-top: 50px;
+      }
+
+      .box {
+        background-color: #f8e4a0;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .box:hover {
+        background-color: #f7d97a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">Trang quản lí nhân viên của công ty A</div>
+
     <div class="container">
-        <h1>Trang chủ</h1>
-        <div class="menu">
-            <button onclick="location.href='quan-ly-nhan-vien.html'">Quản lý nhân viên</button>
-            <button onclick="location.href='quan-ly-phong-ban.html'">Quản lý phòng ban</button>
-        </div>
+      <div class="box" onclick="location.href='quan-ly-nhan-vien.html'">
+        Danh sách nhân viên
+      </div>
+      <div class="box" onclick="location.href='quan-li-phong-ban.html'">
+        Danh sách phòng ban
+      </div>
     </div>
-</body>
+  </body>
+
+  <script>
+    function initializeDepartments() {
+      if (!localStorage.getItem("departments")) {
+        const departments = [
+          { departmentId: "P001", departmentName: "Nhân sự" },
+          { departmentId: "P002", departmentName: "Kế toán" },
+          { departmentId: "P003", departmentName: "Kỹ thuật" },
+          { departmentId: "P004", departmentName: "Marketing" },
+          { departmentId: "P005", departmentName: "Kinh doanh" },
+        ];
+
+        localStorage.setItem("departments", JSON.stringify(departments));
+      }
+    }
+    function initializeEmployees() {
+      // Kiểm tra nếu dữ liệu chưa có trong localStorage
+      if (!localStorage.getItem("employees")) {
+        const employees = [
+          {
+            employeeId: "NV001",
+            employeeName: "Nguyễn Văn Thúy",
+            birthDate: "1990-05-10",
+            gender: "Nam",
+            address: "123 Đường ABC, TP. HCM",
+            phone: "0901234567",
+            departmentId: "P001",
+          },
+          {
+            employeeId: "NV002",
+            employeeName: "Trần Thị Thúy",
+            birthDate: "1995-08-22",
+            gender: "Nữ",
+            address: "456 Đường XYZ, Hà Nội",
+            phone: "0912345678",
+            departmentId: "P002",
+          },
+          {
+            employeeId: "NV003",
+            employeeName: "Lê Văn Thúy",
+            birthDate: "1988-12-15",
+            gender: "Nam",
+            address: "789 Đường MNO, Đà Nẵng",
+            phone: "0923456789",
+            departmentId: "P001",
+          },
+        ];
+        // Lưu vào localStorage
+        localStorage.setItem("employees", JSON.stringify(employees));
+      }
+    }
+
+    // Gọi hàm để khởi tạo dữ liệu
+    initializeEmployees();
+    initializeDepartments();
+  </script>
 </html>
